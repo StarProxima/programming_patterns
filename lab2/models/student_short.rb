@@ -1,4 +1,4 @@
-require_relative 'student_base.rb'
+require_relative 'student_base'
 
 class StudentShort < StudentBase
     
