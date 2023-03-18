@@ -43,11 +43,11 @@ class DataList
   
     # Список значений полей для DataTable. Переопределить в наследниках
     def table_fields(_obj)
-      []
+        raise NotImplementedError, "Метод не реализован"
     end
   
     # Имена атрибутов объектов по порядку. Переопределить в наследниках
     def column_names
-      []
+        raise NotImplementedError, "Метод не реализован"
     end
 end
