@@ -1,3 +1,5 @@
+require_relative 'student_base.rb'
+
 class StudentShort < StudentBase
     
     public_class_method :new
