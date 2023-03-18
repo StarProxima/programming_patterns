@@ -10,7 +10,11 @@ class DataTable
   
     def initialize(table)
       self.rows_count = table.size
-      colums_count = table.first.length()
+      colums_count = 0
+      if(table.first != nil) 
+        colums_count = table.first.length()
+      end
+   
       table.each { |row| colums_count = row.size if row.size < colums_count }
       self.colums_count = colums_count
       self.table = table

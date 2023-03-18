@@ -32,3 +32,16 @@ puts
     end
     puts
 end
+
+0.upto(short_table.rows_count - 1) do |row|
+    stud_info = {}
+    1.upto(short_table.colums_count - 1) do |col|
+      stud_info[short_list.column_names[col - 1].to_sym] = short_table.get_item(row, col)
+    end
+  
+    my_student = StudentShort.new(short_table.get_item(row, 0), JSON.generate(stud_info))
+    puts my_student
+  end
+  
+  short_list.objects = []
+  puts short_list.data_table
