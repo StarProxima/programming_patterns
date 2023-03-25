@@ -1,5 +1,5 @@
-require_relative "data_table"
-require_relative "data_list_student_short"
+require_relative "data/data_table"
+require_relative "data/data_list_student_short"
 require_relative "../models/student"
 require_relative "../models/student_short"
 
