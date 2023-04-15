@@ -1,0 +1,176 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+DataList ..> DataTable
+DataListStudentShort o-- StudentShort
+StudentsList *-- SerializerBase
+StudentsList ..> DataListStudentShort
+
+abstract class StudentBase {
+    -id: Integer
+    -phone: String
+    -telegram: String
+    -email: String
+    -git: String
+    --
+    +{static}valid_name?(String): Boolean
+    +{static}valid_phone?(String): Boolean
+    +{static}valid_telegram?(String): Boolean
+    +{static}valid_git?(String): Boolean
+    +{static}valid_email?(String): Boolean
+    -initialize(Hash)
+    +short_contact(): String
+    +has_contacts?(): Boolean
+    +has_git?(): Boolean
+    +valid?(): Boolean
+    .. Getters ..
+    +id(): Integer
+    +git(): String
+    #phone(): String
+    #telegram(): String
+    #email(): String
+    .. Setters ..
+    #id=(Integer)
+    #git=(String)
+    #phone=(String)
+    #telegram=(String)
+    #email=(String)
+}
+
+class Student extends StudentBase {
+    -last_name: String
+    -first_name: String
+    -father_name: String
+    --
+    +{static}from_hash(Hash): Student
+    +{static}from_json(String): Student
+    +initialize(String, String, String, Hash)
+    +set_contacts(Hash)
+    +last_name_and_initials(): String
+    +short_info(): String
+    +to_s(): String
+    +to_hash(): Hash
+    +to_json(): String
+    .. Getters ..
+    +phone(): String
+    +telegram(): String
+    +email(): String
+    +last_name(): String
+    +first_name(): String
+    +father_name(): String
+    .. Setters ..
+    +id=(Integer)
+    +git=(String)
+    +phone=(String)
+    +telegram=(String)
+    +email=(String)
+    +last_name=(String)
+    +first_name=(String)
+    +father_name=(String)
+}
+
+class StudentShort extends StudentBase {
+    -last_name_and_initials: String
+    -contact: Hash
+    --
+    +{static}from_student(Student): ShortStudent
+    +initialize(Integer, String)
+    +to_s(): String
+    .. Getters ..
+    +last_name_and_initials(): String
+    +contact(): Hash
+    .. Setters ..
+    -last_name_and_initials=(String)
+    -contact=(Hash)
+}
+
+class DataTable {
+    -table: Array
+    -rows_count: Integer
+    -colums_count: Integer
+    --
+    +initialize(Array)
+    +get_item(Integer, Integer): Object
+    .. Getters ..
+    +rows_count(): Integer
+    +cols_count(): Integer
+    -table(): Array
+    .. Setters ..
+    -rows_count=(Integer)
+    -colums_count=(Integer)
+    -table=(Array)
+}
+
+abstract class DataList {
+    -objects
+    -selected_num
+    --
+    -initialize(Array)
+    +select_element(Integer)
+    +data_table(): DataTable
+    +selected_id(): Integer
+    #column_names(): Array
+    #table_fields(Object): Array
+    .. Getters ..
+    -selected_num(): Integer
+    -objects(): Array
+    .. Setters ..
+    -selected_num=(Integer)
+    +objects=(Array)
+}
+
+class DataListStudentShort extends DataList {
+    --
+    +initialize(Array)
+    +column_names(): Array
+    #table_fields(StudentShort): Array
+}
+
+abstract class StudentsList {
+    -students: Array
+    -seq_id: Integer
+    -data_transformer: SerializerBase
+    --
+    -initialize()
+    +load_from_file(String)
+    +save_to_file(String)
+    +student_by_id(Integer): Student
+    +paginated_short_students(Integer, Integer, DataList: nil): DataList
+    +sorted(): Array
+    +add_student(Student)
+    +replace_student(Integer, Student)
+    +remove_student(Integer)
+    +student_count(): Integer
+    -update_seq_id()
+    .. Геттеры ..
+    -students(): Array
+    -seq_id(): Integer
+    -data_transformer(): SerializerBase
+    .. Сеттеры ..
+    -students=(Array)
+    -seq_id=(Integer)
+    +data_transformer=(SerializerBase)
+}
+
+class SerializerBase {
+    --
+    -initialize()
+    #str_to_hash_list(String)
+    #hash_list_to_str(Array)
+}
+
+class SerializerJSON extends SerializerBase {
+    --
+    +initialize()
+    +str_to_hash_list(String): Array
+    +hash_list_to_str(Array): String
+}
+
+class SerializerYAML extends SerializerBase {
+    --
+    +initialize()
+    +str_to_hash_list(String): Array
+    +hash_list_to_str(Array): String
+}
+
+@enduml
