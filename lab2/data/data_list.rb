@@ -38,6 +38,11 @@ class DataList
     def append(*objects)
       self.objects.append(*objects)
     end
+
+    def replace_objects(objects)
+      self.objects = objects.dup
+
+    end
   
     protected
   
